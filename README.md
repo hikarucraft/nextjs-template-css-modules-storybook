@@ -135,6 +135,29 @@ export default {
 };
 ```
 
+7. husky setup
+
+```bash
+npm install -D husky lint-staged
+npx husky install
+npm pkg set scripts.prepare="husky install"
+npm run prepare
+npx husky add .husky/pre-commit "npx lint-staged"
+```
+
+- `package.json`
+
+```json
+{
+  //...
+  "lint-staged": {
+    "*": "next lint --fix",
+    "*": "prettier --write"
+  }
+  //...
+}
+```
+
 ## Refs.
 - https://zenn.dev/yumemi_inc/articles/make-css-modules-happy
 - https://yumegori.com/vscode-nextjs-typescript-eslint-prettier

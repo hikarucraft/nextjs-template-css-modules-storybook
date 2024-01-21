@@ -1,3 +1,148 @@
+# Next.js + Sass + CSS Modules + Storybook
+
+## Setup Process
+
+1. Initialize Next.js Project and Storybook
+
+```bash
+npx create-next-app@latest
+npx storybook@latest init
+```
+
+2. ESlint, Prettier Configuration
+- Refer https://github.com/hikarucraft/nextjs-template-tailwind-storybook
+
+3. Additional npm
+
+```bash
+npm install -D ress sass classnames
+```
+
+4. Stylelint Installation and configuration
+
+```bash
+npm install -D stylelint stylelint-scss stylelint-config-recess-order stylelint-config-recommended-scss
+touch .stylelintrc.json
+```
+
+- `.stylelintrc.json`
+
+```json
+{
+  "plugins": ["stylelint-scss"],
+  "extends": ["stylelint-config-recess-order", "stylelint-config-recommended-scss"], 
+  "rules": {
+    // recommended rules
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+  }
+}
+```
+
+- package.json
+
+```json
+{
+    //...
+  "scripts": {
+    //...
+    "lint:style": "stylelint './**/*.{css,scss}'",
+    "lint:style:fix": "stylelint --fix './**/*.{css,scss}'",
+    //...
+  }
+}
+```
+
+- `.vscode/settings.json`
+
+```json
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true //<- add
+  },
+  "stylelint.validate": ["css", "scss"], //<- add
+}
+```
+- `.vscode/extentions.json`
+
+```json
+{
+  "recommendations":[
+    //...
+    "stylelint.vscode-stylelint"
+    //...
+  ]
+}
+```
+5. Happy CSS Modules
+
+```bash
+npm install -D happy-css-modules
+```
+
+- `settings.json`
+
+```json
+{
+  //...
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "*.module.css": "*.module.css.d.ts, *.module.css.d.ts.map"
+  }
+  //...
+}
+```
+
+- `package.json`
+
+```json
+{
+  "scripts": {
+    //...
+    "style:gen:watch": "hcm 'src/**/*.module.{css,scss,less}' --watch",
+    "style:gen": "hcm 'src/**/*.module.{css,scss,less}'"
+    //...
+  }
+}
+```
+
+- `.gitignore`
+
+```
+#...
+*.module.css.d.ts
+*.module.css.d.ts.map
+#...
+```
+
+6. Sass with Storybook
+
+```bash
+npm install -D @storybook/nextjs
+```
+
+- `.storybook/main.js`
+
+```js
+export default {
+  // ...
+  framework: {
+    // name: '@storybook/react-webpack5', // Remove this
+    name: '@storybook/nextjs', // Add this
+    options: {},
+  },
+};
+```
+
+## Refs.
+- https://zenn.dev/yumemi_inc/articles/make-css-modules-happy
+- https://yumegori.com/vscode-nextjs-typescript-eslint-prettier
+- https://storybook.js.org/recipes/sass#sass
+- https://storybook.js.org/recipes/next#next
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
